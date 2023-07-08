@@ -13,7 +13,13 @@ export const restaurantReducer = (state, { type, payload }) => {
       return {...state, showAddReviewModal: payload};
     case ADD_REVIEW:
       return {...state, 
-        restaurantsData: state?.restaurantsData?.map(restaurant => restaurant?.id === state?.selectedRestaurant?.id ? ({...restaurant, ratings: [payload, ...restaurant.ratings]}) : restaurant)
+        restaurantsData: state?.restaurantsData?.map(restaurant => restaurant?.id === state?.selectedRestaurant?.id ? 
+          ({
+          ...restaurant, 
+          ratings: [payload, ...restaurant.ratings],
+          averageRating: (restaurant.ratings.reduce((acc, {rating}) => acc + Number(rating), 0) + Number(payload.rating)) / (restaurant.ratings.length + 1),
+        }) 
+        : restaurant),
       }
     default:
       return state;
