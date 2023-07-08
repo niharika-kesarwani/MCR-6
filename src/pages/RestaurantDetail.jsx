@@ -11,7 +11,8 @@ export const RestaurantDetail = () => {
     restaurant: { restaurantsData, selectedRestaurant },
     setRestaurant,
   } = useRestaurant();
-  const { SET_SELECTED_RESTAURANT } = restaurantConstants;
+  const { SET_SELECTED_RESTAURANT, SET_SHOW_ADD_REVIEW_MODAL } =
+    restaurantConstants;
   const navigate = useNavigate();
 
   const {
@@ -35,7 +36,7 @@ export const RestaurantDetail = () => {
       type: SET_SELECTED_RESTAURANT,
       payload: selectedRestaurant,
     });
-  }, []);
+  }, [restaurantsData]);
 
   return (
     <div className="px-5 lg:px-40 my-10 flex justify-between gap-5 md:gap-16 flex-col md:flex-row">
@@ -55,7 +56,12 @@ export const RestaurantDetail = () => {
             <div className="text-gray-500">{address}</div>
             <div className="text-gray-500">Average Rating: {averageRating}</div>
           </div>
-          <div className="h-min p-2 rounded-lg text-white bg-red-500">
+          <div
+            className="h-min p-2 rounded-lg text-white bg-red-500 hover:cursor-pointer"
+            onClick={() =>
+              setRestaurant({ type: SET_SHOW_ADD_REVIEW_MODAL, payload: true })
+            }
+          >
             Add Review
           </div>
         </div>
